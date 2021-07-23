@@ -14,7 +14,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <link rel="stylesheet"
@@ -29,7 +29,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>CRUD PRODUCTOS 3</title>
   </head>
   <body>
     <div class="container mt-5">
@@ -46,14 +46,14 @@
         <button type="button" data-alert="eliminar" class="btn btn-danger">ELIMINAR</button>
       </form>
       <div class="tabla mt-2">
-        <div class="container d-flex">
+        <div class="table-responsive">
           <table
-            class="table-responsive"
-            data-toggle="table"
+            class="table table-bordered table-striped table-responsive-stack"
+
             data-pagination="true"
-            data-url="https://jsonplaceholder.cypress.io/todos"
             data-search="true"
-            id="tabla">
+            id="tabla"
+            >
             <thead>
               <tr class="table-dark">
                 <th data-field='title'>Titulo</th>
@@ -82,6 +82,29 @@
       src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./script.js">
+    </script>
+    <script>
+      var settings = {
+        url: "https://jsonplaceholder.cypress.io/todos",
+        method: "GET",
+        timeout: 0,
+        error: (request, status, error) => Swal.fire('Ocurrio un error:', 'No se encontro 404', 'error')
+      };
+
+      $.ajax(settings).done(response => buildTable(response));
+
+      function buildTable(data){
+        var table = document.getElementById('tabla');
+        // const tbody = table.querySelector('tbody');
+        // data.forEach(todos => tbody.innerHTML += todos);
+        $('#tabla').bootstrapTable({ pagination: true, search: true, columns: [{
+            field: 'title',
+        }, {
+            field: 'completed'
+        }, {
+            field: 'id'
+        }], data });
+      }
     </script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
