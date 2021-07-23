@@ -45,20 +45,18 @@
         <button type="button" data-alert="modificar" class="btn btn-primary">MODIFICAR</button>
         <button type="button" data-alert="eliminar" class="btn btn-danger">ELIMINAR</button>
       </form>
+      <div id="content" ></div>
       <div class="tabla mt-2">
         <div class="table-responsive">
           <table
             class="table table-bordered table-striped table-responsive-stack"
-
             data-pagination="true"
             data-search="true"
             id="tabla"
             >
             <thead>
               <tr class="table-dark">
-                <th data-field='title'>Titulo</th>
-                <th data-field="completed">Completado</th>
-                <th data-field="id">Id</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -69,6 +67,7 @@
       </div>
     </div>
 
+    
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -84,11 +83,22 @@
     <script src="./script.js">
     </script>
     <script>
+      $.ajax({
+        url : 'https://jsonplaceholder.cypress.io/todos',
+        beforeSend : function() {
+            $("#content").html('<img src="loading.gif">');
+        },
+        success : function(html) {
+            $("#content").html(html);
+        }
+        }); 
+    </script>
+    <script>
       var settings = {
         url: "https://jsonplaceholder.cypress.io/todos",
         method: "GET",
         timeout: 0,
-        error: (request, status, error) => Swal.fire('Ocurrio un error:', 'No se encontro 404', 'error')
+        error: (request, status, error) => Swal.fire('Ocurrio un error:', 'No se encontro 404 :(', 'error')
       };
 
       $.ajax(settings).done(response => buildTable(response));
@@ -99,10 +109,13 @@
         // data.forEach(todos => tbody.innerHTML += todos);
         $('#tabla').bootstrapTable({ pagination: true, search: true, columns: [{
             field: 'title',
+            title: 'Title',
         }, {
-            field: 'completed'
+            field: 'completed',
+            title:'Completed'
         }, {
-            field: 'id'
+            field: 'id',
+            title:'Id'
         }], data });
       }
     </script>
