@@ -74,7 +74,52 @@ $.ajax({
         },
 
     });
-
+    $('#tableU').bootstrapTable({
+        pagination: true,
+        search: true,
+        showFullscreen: true,
+        showColumns: true,
+        columns: [{
+            field: 'username',
+            title: 'username'
+        }, {
+            field: 'email',
+            title: 'email'
+        }, {
+            field: 'phone',
+            title: 'phone'
+        }
+            , {
+            field: 'id',
+            title: 'id'
+        }],
+    })
+    $.ajax({
+        // la URL para la petición
+        url: 'https://fakestoreapi.com/users',
+    
+        // especifica el tipo de petición
+        type: 'GET',
+    
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+    
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (json) {
+            console.log("Petición GET:", '\n', json);
+    
+            //cargar los datos obtenidos en la tabla
+            $('#tableU').bootstrapTable('load', json);
+        },
+            // código a ejecutar si la petición falla;
+            // son pasados como argumentos a la función
+            // el objeto de la petición en crudo y código de estatus de la petición
+            error: function (xhr, status) {
+                alert('Disculpe, existió un problema con la petición GET');
+            },
+           
+        }); 
 //funcion para agregar
 $("#agregar").click(function () {
     if(document.getElementById("title").value=="" || document.getElementById("price").value==""|| document.getElementById("description").value==""|| document.getElementById("image").value==""|| document.getElementById("category").value==""){
