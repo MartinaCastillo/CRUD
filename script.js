@@ -1,88 +1,193 @@
-// const data = [];
+//Sweet alert de agregar
 
-// function buildTable() {
-//     $('#tabla').bootstrapTable({
-//         pagination: true,
-//   search: true,
-//         columns: [{
-//             field: 'id', // nombre del field in JS
-//             title: 'Id' // el contenido del TD que se va a mostrar.
-//         }, {
-//             field: 'title',
-//             title: 'Titulo'
-//         }, {
-//             field: 'completed',
-//             title: 'Completado'
-//         }],
-//         data
-//     });
-// }
+$('#agregar').click(function(){
+    var titulo = $('#title').val();
+    var precio = $('#price').val();
+    var descrip = $('#description').val();
+    var url_im = $('#image').val();
+    var categ = $('#category').val();
+    
+    if(titulo == '' || precio == ''|| descrip == ''|| url_im == ''|| categ == '' ){
+        Swal.fire({
+            title: 'Espera!',
+            text: 'Por favor, complete todos los campos',
+            icon: 'warning',
+            button: 'Ok',
+        });
+    }else{
+        Swal.fire({
+            title: 'Cambios realizados con exito!',
+            text: 'Se han guardado los cambios',
+            icon:'success',
+        })
+    }
+});
 
-document.getElementById('formulario').addEventListener('submit', addTodo);
+//definicion de la tabla
+$('#table').bootstrapTable({
+    pagination: true,
+    search: true,
+    showFullscreen: true,
+    showColumns: true,
+    columns: [{
+        field: 'id',
+        title: 'id'
+    }, {
+        field: 'title',
+        title: 'title'
+    }, {
+        field: 'price',
+        title: 'price'
+    }
+        , {
+        field: 'description',
+        title: 'description'
+    }],
+})
+//Peticion GET para obtener todos los productos
+$.ajax({
+    // la URL para la petición
+    url: 'https://fakestoreapi.com/products',
 
-function addTodo(event) {
-    event.preventDefault(); // detiene el evento. POST: Server. -> HTTP POST
-    const form = event.currentTarget;
-    const data = [{
-        title: form.querySelector('[name="title"]').value,
-        id: ++(Array.from(document.querySelector('#tabla tbody').querySelectorAll('tr')).length),
-        completed: false
-    }];
-    $('#tabla').bootstrapTable('append', data);
-    form.reset();
-    if (Swal === undefined) return;
-    Swal.fire(
-        'Completado',
-        'Se ha agregado tu tarea :D',
-        'success'
-    );
-}
+    // especifica el tipo de petición
+    type: 'GET',
 
-document.querySelector('[data-alert="modificar"]').addEventListener('click', onModify);
+    // el tipo de información que se espera de respuesta
+    dataType: 'json',
 
-function onModify() {
-    if (Swal === undefined) return;
-    Swal.fire({
-        title: 'Modificar Producto',
-        html:`<input type="text" id="id" class="swal2-input" placeholder="Ingrese su id">
-        <input type="text" id="cambio" class="swal2-input" placeholder="Ingrese su modificacion">`,
-        confirmButtonText: 'Cambiar',
-        focusConfirm: false,
-        preConfirm: () => {
-            const id = Swal.getPopup().querySelector('#id').value
-            const cambio = Swal.getPopup().querySelector('#cambio').value
-            if (!id||!cambio){
-                Swal.showValidationMessage('Por favor ingrese el id y la modificacion')
-            }
-            return {id:id,cambio:cambio}
-        }
-    }).then((result) =>{
-        Swal.fire(`
-        Id: ${result.value.id}
-        Cambio: ${result.value.cambio}
-        `.trim())
-    })
-}
+    // código a ejecutar si la petición es satisfactoria;
+    // la respuesta es pasada como argumento a la función
+    success: function (json) {
+        console.log("Petición GET:", '\n', json);
 
-document.querySelector('[data-alert="eliminar"]').addEventListener('click', onDelete);
+        //cargar los datos obtenidos en la tabla
+        $('#table').bootstrapTable('load', json);
+    },
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            alert('Disculpe, existió un problema con la petición GET');
+        },
+        beforeSend : function() {
+            $("#content").html('<img src="loading.gif">');
+        },
 
-function onDelete() {
-    if (Swal === undefined) return;
-    Swal.fire({
-        title: 'Eliminar Producto',
-        html:`<input type="text" id="id" class="swal2-input" placeholder="Ingrese su id">
-        `,
-        confirmButtonText: 'Eliminar',
-        focusConfirm: false,
-        preConfirm: () => {
-            const id = Swal.getPopup().querySelector('#id').value
-            return {id:id}
-        }
-    }).then((result) =>{
-        Swal.fire(`
-        Se eliminó el producto N°: ${result.value.id} 
-        `.trim())
-    })
-}
+    });
+
+//funcion para agregar
+$("#agregar").click(function () {
+    if(document.getElementById("title").value=="" || document.getElementById("price").value==""|| document.getElementById("description").value==""|| document.getElementById("image").value==""|| document.getElementById("category").value==""){
+        alert("Todos los campos del form agregar producto son obligatorios");
+    }else{
+    //agarra los valores del form
+    console.log("Valores del form agregar:", '\n', $("#formAgregar").serialize());
+    //Peticion POST - Para agregar un producto
+    $.ajax({
+        // la URL para la petición
+        url: 'https://fakestoreapi.com/products',
+
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: $("#formAgregar").serialize(),
+
+        // especifica el tipo de petición
+        type: 'POST',
 
 
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (json) {
+            console.log("Petición POST:", '\n', json);
+
+        },
+
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            alert('Disculpe, existió un problema con la petición POST');
+        },
+
+    });
+};
+});
+
+//funcion para modificar
+$("#modificar").click(function () {
+    if(document.getElementById("idProduct").value=="" || document.getElementById("titleM").value=="" || document.getElementById("priceM").value==""|| document.getElementById("descriptionM").value==""|| document.getElementById("imageM").value==""|| document.getElementById("categoryM").value==""){
+        alert("Todos los campos del form editar producto son obligatorios");
+    }else{
+        console.log("Valores del form editar:", '\n', $("#formModificar").serialize());
+        //Peticion PUT- Para modificar un producto
+        $.ajax({
+            // la URL para la petición
+            url: 'https://fakestoreapi.com/products/' + document.getElementById("idProduct").value,
+    
+    
+            // la información a enviar
+            // (también es posible utilizar una cadena de datos)
+            data: $("#formModificar").serialize(),
+    
+            // especifica el tipo de petición
+            type: 'PUT',
+    
+            // el tipo de información que se espera de respuesta
+            dataType: 'json',
+    
+            // código a ejecutar si la petición es satisfactoria;
+            // la respuesta es pasada como argumento a la función
+            success: function (json) {
+                console.log("Petición PUT:", '\n', json);
+            },
+    
+            // código a ejecutar si la petición falla;
+            // son pasados como argumentos a la función
+            // el objeto de la petición en crudo y código de estatus de la petición
+            error: function (xhr, status) {
+                alert('Disculpe, existió un problema con la petición PUT');
+            },
+    
+        });
+    }
+
+});
+
+//funcion para eliminar
+$("#eliminar").click(function () {
+    if(document.getElementById("idProductE").value==""){
+        alert("El id del producto a eliminar es obligatorio");
+    }else{
+        console.log("Valores del form eliminar:", '\n', document.getElementById("idProductE").value);
+        //Peticion DELETE- Para eliminar un producto
+        $.ajax({
+            // la URL para la petición
+            url: 'https://fakestoreapi.com/products/' + document.getElementById("idProductE").value,
+    
+            // especifica el tipo de petición
+            type: 'DELETE',
+    
+            // el tipo de información que se espera de respuesta
+            dataType: 'json',
+    
+            // código a ejecutar si la petición es satisfactoria;
+            // la respuesta es pasada como argumento a la función
+            success: function (json) {
+                console.log("Petición DELETE:", '\n', json);
+            },
+    
+            // código a ejecutar si la petición falla;
+            // son pasados como argumentos a la función
+            // el objeto de la petición en crudo y código de estatus de la petición
+            error: function (xhr, status) {
+                alert('Disculpe, existió un problema con la petición DELETE');
+            },
+    
+        });
+    }
+    
+   
+});
