@@ -1,27 +1,4 @@
-//Sweet alert de agregar
 
-$('#agregar').click(function(){
-    var titulo = $('#title').val();
-    var precio = $('#price').val();
-    var descrip = $('#description').val();
-    var url_im = $('#image').val();
-    var categ = $('#category').val();
-    
-    if(titulo == '' || precio == ''|| descrip == ''|| url_im == ''|| categ == '' ){
-        Swal.fire({
-            title: 'Espera!',
-            text: 'Por favor, complete todos los campos',
-            icon: 'warning',
-            button: 'Ok',
-        });
-    }else{
-        Swal.fire({
-            title: 'Cambios realizados con exito!',
-            text: 'Se han guardado los cambios',
-            icon:'success',
-        })
-    }
-});
 
 //definicion de la tabla
 $('#table').bootstrapTable({
@@ -123,10 +100,23 @@ $.ajax({
 //funcion para agregar
 $("#agregar").click(function () {
     if(document.getElementById("title").value=="" || document.getElementById("price").value==""|| document.getElementById("description").value==""|| document.getElementById("image").value==""|| document.getElementById("category").value==""){
-        alert("Todos los campos del form agregar producto son obligatorios");
+        //sweet alert para cuando faltan campos que completar
+        Swal.fire({
+            title: 'Espera!',
+            text: 'Por favor, complete todos los campos',
+            icon: 'warning',
+            button: 'Ok',
+        });
     }else{
+        //sweet alert de exito
+        Swal.fire({
+            title: 'Producto agregado correctamente!',
+            text: 'Se han guardado los cambios',
+            icon:'success',
+        })
     //agarra los valores del form
     console.log("Valores del form agregar:", '\n', $("#formAgregar").serialize());
+
     //Peticion POST - Para agregar un producto
     $.ajax({
         // la URL para la petición
@@ -204,8 +194,20 @@ $("#modificar").click(function () {
 //funcion para eliminar
 $("#eliminar").click(function () {
     if(document.getElementById("idProductE").value==""){
-        alert("El id del producto a eliminar es obligatorio");
+        //sweet alert faltan campos que completar
+        Swal.fire({
+            title: 'Espera!',
+            text: 'Por favor, complete todos los campos',
+            icon: 'warning',
+            button: 'Ok',
+        });
     }else{
+        //sweet alert eliminado con exito
+        Swal.fire({
+            title: 'Eliminacion exitosa!',
+            text: 'Se ha eliminado el producto',
+            icon:'success',
+        })
         console.log("Valores del form eliminar:", '\n', document.getElementById("idProductE").value);
         //Peticion DELETE- Para eliminar un producto
         $.ajax({
