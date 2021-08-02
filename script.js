@@ -154,8 +154,12 @@ $("#agregar").click(function () {
 //funcion para modificar
 $("#modificar").click(function () {
     if(document.getElementById("idProduct").value=="" || document.getElementById("titleM").value=="" || document.getElementById("priceM").value==""|| document.getElementById("descriptionM").value==""|| document.getElementById("imageM").value==""|| document.getElementById("categoryM").value==""){
-        alert("Todos los campos del form editar producto son obligatorios");
-    }else{
+        Swal.fire({
+            title: 'Espera!',
+            text: 'Por favor, complete todos los campos',
+            icon: 'warning',
+            button: 'Ok',
+        });    }else{
         console.log("Valores del form editar:", '\n', $("#formModificar").serialize());
         //Peticion PUT- Para modificar un producto
         $.ajax({

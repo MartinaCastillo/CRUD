@@ -9,7 +9,7 @@
 
 
 -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -58,29 +58,60 @@
   <!--INICIO  Form para agregar un producto -->
           <div class="container">
             <h2>Form para agregar un producto:</h2>
-            <form id="formulario" action="" name="formAgregar">
+            <form id="formulario" name="formAgregar" class="needs-validation" novalidate>
                 <div class="form-group">
-                    <label>Titulo:</label>
-                    <input type="text" id="title" name="title" class="form-control">
+                    <label for="title">Titulo:</label>
+                    <input type="text" class="form-control" id="validationCustom03" required>
+                    <div class="invalid-feedback">
+                      Ingrese un titulo, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Precio:</label>
-                    <input type="float" id="price" name="price" class="form-control">
-                </div>
+                  <div class="form-group">
+                     <label>Precio:</label>
+                    <input type="number" id="price" name="price" class="form-control" required pattern="[0-9]+">
+                    <div class="invalid-feedback">
+                      Ingrese un precio valido, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
+                  </div>                   
                 <div class="form-group">
                     <label>Descripción:</label>
-                    <input type="text" name="description" id="description" class="form-control"></input>
+                    <input type="text" name="description" id="description" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese una descripcion, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>URL de una imagen del producto:</label>
-                    <input type="text" name="image" id="image" class="form-control"></input>
+                    <input type="text" name="image" id="image" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese un url, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Categoria:</label>
-                    <input type="text" name="category" id="category" class="form-control"></input>
-                </div>
+                    <input type="text" name="category" id="category" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese una categoria, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
+                </div>  
+              <button type="submit" class="btn btn-primary mt-3" id="agregar">Agregar Producto</button>
+
             </form>
-            <button type="button" class="btn btn-primary mt-3" id="agregar">Agregar Producto</button>
         </div>
   <!-- /FINAL Form para agregar un producto -->
       </div>
@@ -98,32 +129,67 @@
             <h2>Form para modificar un producto:</h2>
             <div class="form-group">
                 <label>Id del producto a modificar:</label>
-                <input type="text" id="idProduct" name="idProduct" class="form-control">
+                <input type="number" id="idProduct" name="idProduct" class="form-control" required>
+                <div class="invalid-feedback">
+                  Ingrese un ID, por favor.
+                </div>
+                <div class="valid-feedback">
+                  Campo completado!
+                </div>
             </div>
-            <form id="formModificar" action="" name="formModificar">
-      
+            <form id="formModificar" action="" name="formModificar" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label>Titulo:</label>
-                    <input type="text" id="titleM" name="title" class="form-control">
+                    <input type="text" id="titleM" name="title" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese un titulo, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Precio:</label>
-                    <input type="float" id="priceM" name="price" class="form-control">
+                    <input type="number" id="priceM" name="price" class="form-control" pattern="[0-9]+" required>
+                    <div class="invalid-feedback">
+                      Ingrese un precio valido, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Descripción:</label>
-                    <input type="text" name="description" id="descriptionM" class="form-control"></input>
+                    <input type="text" name="description" id="descriptionM" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese una descripcion, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>URL de una imagen del producto:</label>
-                    <input type="text" name="image" id="imageM" class="form-control"></input>
+                    <input type="text" name="image" id="imageM" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese una URL, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Categoria:</label>
-                    <input type="text" name="category" id="categoryM" class="form-control"></input>
+                    <input type="text" name="category" id="categoryM" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese una categoria, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
                 </div>
-            </form>
-            <button class="btn btn-primary mt-3" id="modificar">Modificar Producto</button>
+            <button type="submit" class="btn btn-primary mt-3" id="modificar">Modificar Producto</button>
+          </form>
         </div>
   <!-- /FINAL Form para modificar un producto -->
       </div>
@@ -139,11 +205,15 @@
   <!-- /INICIO Form para eliminar un producto -->
           <div class="container">
             <h2>Form para eliminar un producto:</h2>
-            <div class="form-group">
-                <label>Id del producto a eliminar:</label>
-                <input type="text" id="idProductE" name="idProduct" class="form-control">
-            </div>
-            <button class="btn btn-primary mt-3" id="eliminar">Eliminar Producto</button>
+            <form id="formEliminar" action="" name="formEliminar" class="needs-validation" novalidate>
+              <div class="form-group">
+                  <label>Id del producto a eliminar:</label>
+                  <input type="number" id="idProductE" name="idProduct" class="form-control" required>
+                  <div class="invalid-feedback">Ingrese un ID</div>
+                  <div class="valid-feedback">ID valido!</div>
+              </div>
+            <button type="submit" class="btn btn-primary mt-3" id="eliminar">Eliminar Producto</button>
+            </form>
         </div>
   <!-- /FINAL Form para eliminar un producto -->
         </div>
@@ -189,6 +259,32 @@
       src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./script.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+    
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
     </script>
     <script>
 
