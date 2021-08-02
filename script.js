@@ -181,7 +181,13 @@ $("#modificar").click(function () {
     
             // código a ejecutar si la petición es satisfactoria;
             // la respuesta es pasada como argumento a la función
-            success: function (json) {
+            success:
+            Swal.fire({
+                title: 'Modificacion exitosa!',
+                text: 'Se ha modificado el producto',
+                icon:'success',
+            }),
+            function (json) {
                 console.log("Petición PUT:", '\n', json);
             },
     
@@ -208,12 +214,7 @@ $("#eliminar").click(function () {
             button: 'Ok',
         });
     }else{
-        //sweet alert eliminado con exito
-        Swal.fire({
-            title: 'Eliminacion exitosa!',
-            text: 'Se ha eliminado el producto',
-            icon:'success',
-        })
+    
         console.log("Valores del form eliminar:", '\n', document.getElementById("idProductE").value);
         //Peticion DELETE- Para eliminar un producto
         $.ajax({
@@ -228,7 +229,13 @@ $("#eliminar").click(function () {
     
             // código a ejecutar si la petición es satisfactoria;
             // la respuesta es pasada como argumento a la función
-            success: function (json) {
+            success: 
+            Swal.fire({
+                title: 'Eliminacion exitosa!',
+                text: 'Se ha eliminado el producto',
+                icon:'success',
+            }),
+            function (json) {
                 console.log("Petición DELETE:", '\n', json);
             },
     
