@@ -109,11 +109,7 @@ $("#agregar").click(function () {
         });
     }else{
         //sweet alert de exito
-        Swal.fire({
-            title: 'Producto agregado correctamente!',
-            text: 'Se han guardado los cambios',
-            icon:'success',
-        })
+       
     //agarra los valores del form
     console.log("Valores del form agregar:", '\n', $("#formAgregar").serialize());
 
@@ -135,7 +131,13 @@ $("#agregar").click(function () {
 
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
-        success: function (json) {
+        success:  
+        Swal.fire({
+            title: 'Producto agregado correctamente!',
+            text: 'Se han guardado los cambios',
+            icon:'success',
+        }),
+        function (json) {
             console.log("Petición POST:", '\n', json);
 
         },
