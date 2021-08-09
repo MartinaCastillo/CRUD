@@ -1,4 +1,10 @@
-
+$.ajax({
+    url: 'https://fakestoreapi.com/products',
+    success: function(html){
+      $("#content").html(html);
+    },
+    error: function (jqXHR, textStatus, errorThrown) { alert('Error'); }
+});
 
 //definicion de la tabla
 $('#table').bootstrapTable({
@@ -17,8 +23,8 @@ $('#table').bootstrapTable({
         title: 'price'
     }
         , {
-        field: 'description',
-        title: 'description'
+        field: 'image',
+        title: 'image'
     }],
 })
 //Peticion GET para obtener todos los productos
@@ -36,7 +42,6 @@ $.ajax({
     // la respuesta es pasada como argumento a la función
     success: function (json) {
         console.log("Petición GET:", '\n', json);
-
         //cargar los datos obtenidos en la tabla
         $('#table').bootstrapTable('load', json);
     },
@@ -166,7 +171,7 @@ $("#modificar").click(function () {
         //Peticion PUT- Para modificar un producto
         $.ajax({
             // la URL para la petición
-            url: 'https://fakestoreapi.com/products/' + document.getElementById("idProduct").value,
+            url: 'https://fakestoreapi.com/products' + document.getElementById("idProduct").value,
     
     
             // la información a enviar
@@ -219,7 +224,7 @@ $("#eliminar").click(function () {
         //Peticion DELETE- Para eliminar un producto
         $.ajax({
             // la URL para la petición
-            url: 'https://fakestoreapi.com/products/' + document.getElementById("idProductE").value,
+            url: 'https://fakestoreapi.com/products' + document.getElementById("idProductE").value,
     
             // especifica el tipo de petición
             type: 'DELETE',

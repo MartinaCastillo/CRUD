@@ -29,7 +29,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous">
 
-    <title>CRUD PRODUCTOS 3</title>
+    <title>CRUD PRESENTACION</title>
   </head>
   <body>
     <div class="header">
@@ -61,7 +61,7 @@
             <form id="formulario" action="" name="formAgregar" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="title">Titulo:</label>
-                    <input type="text" class="form-control" id="validationCustom03" required>
+                    <input type="text" class="form-control" id="title" required>
                     <div class="invalid-feedback">
                       Ingrese un titulo, por favor.
                     </div>
@@ -122,22 +122,22 @@
           Modificar
         </button>
       </h2>
-      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#acordeonz">
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#acordeon">
         <div class="accordion-body">
-  <!-- /INICIO Form para modificar un producto -->
+<!--INICIO Form para modificar un producto -->
           <div class="container">
             <h2>Form para modificar un producto:</h2>
-            <div class="form-group">
-                <label>Id del producto a modificar:</label>
-                <input type="number" id="idProduct" name="idProduct" class="form-control" required>
-                <div class="invalid-feedback">
-                  Ingrese un ID, por favor.
-                </div>
-                <div class="valid-feedback">
-                  Campo completado!
-                </div>
-            </div>
             <form id="formModificar" action="" name="formModificar" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label>Id del producto a modificar:</label>
+                    <input type="number" id="idProduct" name="idProduct" class="form-control" required>
+                    <div class="invalid-feedback">
+                      Ingrese un ID, por favor.
+                    </div>
+                    <div class="valid-feedback">
+                      Campo completado!
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Titulo:</label>
                     <input type="text" id="titleM" name="title" class="form-control" required>
@@ -194,6 +194,7 @@
   <!-- /FINAL Form para modificar un producto -->
       </div>
     </div>
+    </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingThree">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
@@ -225,7 +226,12 @@
       </div>  
   </div>
 
+
+<!---*******LOADER*******-->
  <div id="content"></div>
+<!---*******LOADER*******-->
+
+
 <div class="divPro">
     <h3>TABLA PRODUCTOS</h3>
 </div>
@@ -279,23 +285,43 @@
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
+        } else {
+           // Hide the delete button
+           document.getElementById('agregar').style.display = 'none';
+                            // Connect with the Api for deleted a product
+                            $.ajax({
+                                url: 'https://fakestoreapi.com/products' + document.getElementById("id").value,
+                                type: 'DELETE',
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    // Show the loader button
+                                    document.getElementById('content').style.display = 'block';
+                                },
+                                success: function (json) {
+                                    // Hide the loader button
+                                    document.getElementById('content').style.display = 'none';
+                                    // Show the loader button 
+                                    document.getElementById('agregar').style.display = 'block';
+                                    // Show the success message
+                                    alert('The product was deleted successfully!!');
+                                },
+                                error: function (xhr, status) {
+                                    // Hide the loader button 
+                                    document.getElementById('content').style.display = 'none';
+                                    // Show the delete button 
+                                    document.getElementById('agregar').style.display = 'block';
+                                    // Show the error message
+                                    alert('Error!!');
+                                },
+                            });
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
       }, false)
     })
 })()
     </script>
-    <script>
-
-      $.ajax({
-        url: 'https://fakestoreapi.com/products',
-        success: function(html){
-          $("#content").html(html);
-        },
-        error: function (jqXHR, textStatus, errorThrown) { alert('Error'); }
-    });
-
-    </script>
+   
   </body>
 </html>
